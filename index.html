@@ -296,44 +296,192 @@
     CLUBMATCH © 2026 · FOOTBALL CONNECTS US
   </footer>
 
-  <script>
-    function searchPlayers() {
-      const team1 = document.getElementById("team1").value.trim();
-      const team2 = document.getElementById("team2").value.trim();
-      const result = document.getElementById("result");
+  
+const WIKIDATA_API = "https://www.wikidata.org/w/api.php";
+const SPARQL_API = "https://query.wikidata.org/sparql";
 
-      result.style.display = "block";
+async function findTeam(name) {
+  const url = new URL(WIKIDATA_API);
+  url.search = new URLSearchParams({
+    action: "wbsearchentities",
+    search: name,
+    language: "en",
+    format: "json",
+    origin: "*",
+    limit: "5"
+  });
 
-      if (!team1 || !team2) {
-        result.innerHTML =
-          "⚠️ Lütfen iki takımın adını da gir.";
-        return;
+  const response = await fetch(url);
+  if (!response.ok) throw new Error("Takım araması başarısız.");
+
+  const data = await response.json();
+
+  if (!data.search || data.search.length === 0) {
+    throw new Error(name + " adlı takım bulunamadı.");
+  }
+
+  return data.search[0];
+}
+
+async function findPlayers(teamA, teamB) {
+  const query = `
+    SELECT DISTINCT
+      ?player
+      ?playerLabel
+      ?playerDescription
+      ?image
+    WHERE {
+      ?player wdt:P54 wd:${teamA};
+              wdt:P54 wd:${teamB}.
+
+      OPTIONAL {
+        ?player wdt:P18 ?image.
       }
 
-      if (team1.toLowerCase() === team2.toLowerCase()) {
-        result.innerHTML =
-          "⚠️ Lütfen birbirinden farklı iki takım seç.";
-        return;
+      SERVICE wikibase:label {
+        bd:serviceParam wikibase:language "en".
       }
+    }
+    LIMIT 100
+  `;
 
-      result.innerHTML =
-        "<strong>" + escapeHTML(team1) + "</strong> ve " +
-        "<strong>" + escapeHTML(team2) + "</strong>" +
-        "<br><br>Arama sistemi henüz futbolcu veri kaynağına bağlanmadı. Bir sonraki geliştirme adımında gerçek oyuncu verilerini ekleyeceğiz.";
+  const url = SPARQL_API + "?" + new URLSearchParams({
+    query: query,
+    format: "json"
+  });
+
+  const response = await fetch(url, {
+    headers: {
+      "Accept": "application/sparql-results+json"
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error("Futbolcu verileri alınamadı.");
+  }
+
+  const data = await response.json();
+  return data.results.bindings;
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+async function searchPlayers() {
+  const team1 = document.getElementById("team1").value.trim();
+  const team2 = document.getElementById("team2").value.trim();
+  const result = document.getElementById("result");
+
+  result.style.display = "block";
+
+  if (!team1 || !team2) {
+    result.innerHTML = "⚠️ Lütfen iki takımın adını da gir.";
+    return;
+  }
+
+  if (team1.toLowerCase() === team2.toLowerCase()) {
+    result.innerHTML = "⚠️ İki farklı takım seçmelisin.";
+    return;
+  }
+
+  result.innerHTML = "⏳ Takımlar aranıyor...";
+
+  try {
+    const [club1, club2] = await Promise.all([
+      findTeam(team1),
+      findTeam(team2)
+    ]);
+
+    result.innerHTML = "🔎 Ortak futbolcular araştırılıyor...";
+
+    const players = await findPlayers(club1.id, club2.id);
+
+    let html = `
+      <h2 style="color:#35dc91;margin-bottom:10px;">
+        Ortak futbolcular
+      </h2>
+      <p style="margin-bottom:15px;">
+        ${escapeHTML(club1.label)} ×
+        ${escapeHTML(club2.label)}
+      </p>
+      <p style="margin-bottom:20px;">
+        Bulunan oyuncu sayısı: <strong>${players.length}</strong>
+      </p>
+    `;
+
+    if (players.length === 0) {
+      html += `
+        <p>Bu iki takım için Wikidata'da kayıtlı ortak futbolcu bulunamadı.</p>
+      `;
     }
 
-    function escapeHTML(value) {
-      return value.replace(/[&<>"']/g, function(char) {
-        return {
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#39;"
-        }[char];
-      });
-    }
-  </script>
+    players.forEach(player => {
+      const name = player.playerLabel?.value || "İsimsiz oyuncu";
+      const description =
+        player.playerDescription?.value || "Futbolcu";
+      const image = player.image?.value || "";
+      const playerUrl = player.player?.value || "";
+
+      html += `
+        <div style="
+          display:flex;
+          gap:15px;
+          align-items:center;
+          background:#111827;
+          border:1px solid #263249;
+          padding:12px;
+          border-radius:12px;
+          margin-bottom:12px;
+        ">
+          ${
+            image.startsWith("https://")
+            ? `<img src="${escapeHTML(image)}"
+                alt="${escapeHTML(name)}"
+                style="width:65px;height:65px;object-fit:cover;border-radius:10px;">`
+            : `<div style="width:65px;height:65px;background:#263249;border-radius:10px;display:grid;place-items:center;">⚽</div>`
+          }
+
+          <div>
+            <strong style="color:#35dc91;">
+              ${escapeHTML(name)}
+            </strong>
+            <p style="font-size:12px;color:#9aa8bc;margin-top:5px;">
+              ${escapeHTML(description)}
+            </p>
+            ${
+              playerUrl.startsWith("https://www.wikidata.org/")
+              ? `<a href="${escapeHTML(playerUrl)}" target="_blank" rel="noopener noreferrer" style="color:#35dc91;font-size:12px;">Oyuncu bilgileri ↗</a>`
+              : ""
+            }
+          </div>
+        </div>
+      `;
+    });
+
+    html += `
+      <p style="font-size:11px;color:#8290a5;margin-top:15px;">
+        Kaynak: Wikidata. Sonuçlar veri tabanındaki kayıtlarla sınırlıdır.
+      </p>
+    `;
+
+    result.innerHTML = html;
+
+  } catch (error) {
+    result.innerHTML = `
+      <strong style="color:#ff7777;">Bir hata oluştu!</strong>
+      <p>${escapeHTML(error.message)}</p>
+      <p style="margin-top:8px;">İnternet bağlantını kontrol edip tekrar dene.</p>
+    `;
+  }
+}
+
 
 </body>
 </html>
