@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090d18">
+  <title>ClubMatch | Football Career Finder</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #090d18;
+      color: #f1f5f9;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #20283a;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: #35dc91;
+    }
+
+    .tag {
+      color: #35dc91;
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 65px auto;
+      padding: 20px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 52px);
+      margin: 15px 0;
+      letter-spacing: -2px;
+    }
+
+    .hero h1 span {
+      color: #35dc91;
+    }
+
+    .hero p {
+      color: #8d9ab0;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .search-box {
+      background: #111827;
+      border: 1px solid #263249;
+      border-radius: 20px;
+      padding: 25px;
+    }
+
+    .teams {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .team label {
+      display: block;
+      font-size: 12px;
+      color: #9aa8bc;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 17px;
+      border-radius: 11px;
+      border: 1px solid #303d54;
+      background: #0b1220;
+      color: white;
+      font-size: 15px;
+      outline: none;
+      transition: .2s;
+    }
+
+    input:focus {
+      border-color: #35dc91;
+    }
+
+    input::placeholder {
+      color: #64748b;
+    }
+
+    .versus {
+      text-align: center;
+      color: #35dc91;
+      font-weight: bold;
+      font-size: 13px;
+      margin: 22px 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 17px;
+      background: #35dc91;
+      color: #07140e;
+      border: none;
+      border-radius: 11px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    button:hover {
+      background: #20c77c;
+      transform: translateY(-2px);
+    }
+
+    .result-area {
+      margin-top: 25px;
+      display: none;
+      padding: 18px;
+      border: 1px solid #263249;
+      border-radius: 12px;
+      background: #0b1220;
+      line-height: 1.7;
+      color: #b8c5d8;
+      font-size: 14px;
+    }
+
+    .result-area strong {
+      color: #35dc91;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 13px;
+      margin-top: 30px;
+    }
+
+    .feature {
+      padding: 20px 12px;
+      background: #111827;
+      border: 1px solid #202b40;
+      border-radius: 13px;
+      text-align: center;
+    }
+
+    .feature .icon {
+      font-size: 25px;
+      margin-bottom: 10px;
+    }
+
+    .feature h3 {
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .feature p {
+      color: #8290a5;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #64748b;
+      font-size: 12px;
+      border-top: 1px solid #20283a;
+      margin-top: 50px;
+    }
+
+    @media(max-width: 550px) {
+      main {
+        margin-top: 40px;
+      }
+
+      .teams {
+        grid-template-columns: 1fr;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">CLUB<span>MATCH</span></div>
+    <div class="tag">FOOTBALL CAREER FINDER</div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div style="font-size:38px;">⚽</div>
+      <h1>Ortak futbolcuları <span>keşfet.</span></h1>
+      <p>
+        İki futbol kulübü seç. Tarih boyunca her iki takımda da
+        forma giymiş futbolcuları keşfet.
+      </p>
+    </section>
+
+    <section class="search-box">
+
+      <div class="teams">
+
+        <div class="team">
+          <label>1. FUTBOL KULÜBÜ</label>
+          <input
+            id="team1"
+            type="text"
+            placeholder="Örn. Tottenham"
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="team">
+          <label>2. FUTBOL KULÜBÜ</label>
+          <input
+            id="team2"
+            type="text"
+            placeholder="Örn. Borussia Dortmund"
+            autocomplete="off"
+          >
+        </div>
+
+      </div>
+
+      <div class="versus">VS</div>
+
+      <button onclick="searchPlayers()">
+        ⚡ ORTAK FUTBOLCULARI BUL
+      </button>
+
+      <div class="result-area" id="result"></div>
+
+    </section>
+
+    <section class="features">
+
+      <div class="feature">
+        <div class="icon">👤</div>
+        <h3>Oyuncu Bilgileri</h3>
+        <p>Futbolcuların kariyer geçmişleri</p>
+      </div>
+
+      <div class="feature">
+        <div class="icon">🏆</div>
+        <h3>Kulüp Geçmişi</h3>
+        <p>Geçmiş ve güncel takımlar</p>
+      </div>
+
+      <div class="feature">
+        <div class="icon">🔎</div>
+        <h3>Akıllı Arama</h3>
+        <p>İki takım arasında ortak oyuncular</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    CLUBMATCH © 2026 · FOOTBALL CONNECTS US
+  </footer>
+
+  <script>
+    function searchPlayers() {
+      const team1 = document.getElementById("team1").value.trim();
+      const team2 = document.getElementById("team2").value.trim();
+      const result = document.getElementById("result");
+
+      result.style.display = "block";
+
+      if (!team1 || !team2) {
+        result.innerHTML =
+          "⚠️ Lütfen iki takımın adını da gir.";
+        return;
+      }
+
+      if (team1.toLowerCase() === team2.toLowerCase()) {
+        result.innerHTML =
+          "⚠️ Lütfen birbirinden farklı iki takım seç.";
+        return;
+      }
+
+      result.innerHTML =
+        "<strong>" + escapeHTML(team1) + "</strong> ve " +
+        "<strong>" + escapeHTML(team2) + "</strong>" +
+        "<br><br>Arama sistemi henüz futbolcu veri kaynağına bağlanmadı. Bir sonraki geliştirme adımında gerçek oyuncu verilerini ekleyeceğiz.";
+    }
+
+    function escapeHTML(value) {
+      return value.replace(/[&<>"']/g, function(char) {
+        return {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
+        }[char];
+      });
+    }
+  </script>
+
+</body>
+</html>
