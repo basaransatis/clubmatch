@@ -2,334 +2,420 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#090d18">
-  <title>ClubMatch | Football Career Finder</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090d18">
+<title>ClubMatch | Ortak Futbolcular</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    body {
-      background: #090d18;
-      color: #f1f5f9;
-      font-family: Arial, sans-serif;
-      min-height: 100vh;
-    }
+body {
+  background: #090d18;
+  color: #f1f5f9;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
 
-    header {
-      padding: 22px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #20283a;
-    }
+header {
+  padding: 22px;
+  border-bottom: 1px solid #202b40;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    .logo {
-      font-size: 25px;
-      font-weight: 900;
-      letter-spacing: -1px;
-    }
+.logo {
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
 
-    .logo span {
-      color: #35dc91;
-    }
+.logo span {
+  color: #35dc91;
+}
 
-    .tag {
-      color: #35dc91;
-      font-size: 11px;
-      letter-spacing: 2px;
-    }
+.status {
+  color: #35dc91;
+  font-size: 11px;
+}
 
-    main {
-      max-width: 850px;
-      margin: 65px auto;
-      padding: 20px;
-    }
+main {
+  max-width: 850px;
+  margin: 55px auto;
+  padding: 20px;
+}
 
-    .hero {
-      text-align: center;
-      margin-bottom: 40px;
-    }
+.hero {
+  text-align: center;
+  margin-bottom: 35px;
+}
 
-    .hero h1 {
-      font-size: clamp(32px, 6vw, 52px);
-      margin: 15px 0;
-      letter-spacing: -2px;
-    }
+.ball {
+  font-size: 45px;
+}
 
-    .hero h1 span {
-      color: #35dc91;
-    }
+h1 {
+  font-size: clamp(32px, 6vw, 48px);
+  margin: 15px 0;
+  letter-spacing: -2px;
+}
 
-    .hero p {
-      color: #8d9ab0;
-      line-height: 1.7;
-      font-size: 14px;
-    }
+h1 span {
+  color: #35dc91;
+}
 
-    .search-box {
-      background: #111827;
-      border: 1px solid #263249;
-      border-radius: 20px;
-      padding: 25px;
-    }
+.hero p {
+  color: #8d9ab0;
+  line-height: 1.7;
+  font-size: 14px;
+}
 
-    .teams {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-    }
+.search-box {
+  background: #111827;
+  border: 1px solid #263249;
+  border-radius: 20px;
+  padding: 25px;
+}
 
-    .team label {
-      display: block;
-      font-size: 12px;
-      color: #9aa8bc;
-      margin-bottom: 10px;
-    }
+.teams {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
 
-    input {
-      width: 100%;
-      padding: 17px;
-      border-radius: 11px;
-      border: 1px solid #303d54;
-      background: #0b1220;
-      color: white;
-      font-size: 15px;
-      outline: none;
-      transition: .2s;
-    }
+label {
+  display: block;
+  color: #9aa8bc;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
 
-    input:focus {
-      border-color: #35dc91;
-    }
+input {
+  width: 100%;
+  padding: 16px;
+  background: #0b1220;
+  border: 1px solid #303d54;
+  border-radius: 10px;
+  color: white;
+  font-size: 15px;
+  outline: none;
+}
 
-    input::placeholder {
-      color: #64748b;
-    }
+input:focus {
+  border-color: #35dc91;
+}
 
-    .versus {
-      text-align: center;
-      color: #35dc91;
-      font-weight: bold;
-      font-size: 13px;
-      margin: 22px 0;
-    }
+input::placeholder {
+  color: #64748b;
+}
 
-    button {
-      width: 100%;
-      padding: 17px;
-      background: #35dc91;
-      color: #07140e;
-      border: none;
-      border-radius: 11px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: .2s;
-    }
+.versus {
+  text-align: center;
+  color: #35dc91;
+  font-weight: bold;
+  margin: 22px;
+}
 
-    button:hover {
-      background: #20c77c;
-      transform: translateY(-2px);
-    }
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+}
 
-    .result-area {
-      margin-top: 25px;
-      display: none;
-      padding: 18px;
-      border: 1px solid #263249;
-      border-radius: 12px;
-      background: #0b1220;
-      line-height: 1.7;
-      color: #b8c5d8;
-      font-size: 14px;
-    }
+#searchButton {
+  width: 100%;
+  padding: 17px;
+  background: #35dc91;
+  color: #07140e;
+  font-size: 15px;
+}
 
-    .result-area strong {
-      color: #35dc91;
-    }
+#searchButton:disabled {
+  opacity: .55;
+  cursor: wait;
+}
 
-    .features {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 13px;
-      margin-top: 30px;
-    }
+.result {
+  display: none;
+  margin-top: 25px;
+  padding: 18px;
+  background: #0b1220;
+  border: 1px solid #263249;
+  border-radius: 13px;
+}
 
-    .feature {
-      padding: 20px 12px;
-      background: #111827;
-      border: 1px solid #202b40;
-      border-radius: 13px;
-      text-align: center;
-    }
+.message {
+  color: #aab8cc;
+  font-size: 14px;
+  line-height: 1.7;
+}
 
-    .feature .icon {
-      font-size: 25px;
-      margin-bottom: 10px;
-    }
+.player {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 13px;
+  margin-top: 12px;
+  border: 1px solid #263249;
+  border-radius: 12px;
+  background: #111827;
+}
 
-    .feature h3 {
-      font-size: 12px;
-      margin-bottom: 7px;
-    }
+.player img,
+.no-image {
+  width: 68px;
+  height: 68px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #263249;
+  flex-shrink: 0;
+}
 
-    .feature p {
-      color: #8290a5;
-      font-size: 11px;
-      line-height: 1.5;
-    }
+.no-image {
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+}
 
-    footer {
-      text-align: center;
-      padding: 30px;
-      color: #64748b;
-      font-size: 12px;
-      border-top: 1px solid #20283a;
-      margin-top: 50px;
-    }
+.player-name {
+  color: #35dc91;
+  font-size: 15px;
+  font-weight: bold;
+}
 
-    @media(max-width: 550px) {
-      main {
-        margin-top: 40px;
-      }
+.player-info {
+  color: #9aa8bc;
+  font-size: 12px;
+  margin-top: 6px;
+  line-height: 1.5;
+}
 
-      .teams {
-        grid-template-columns: 1fr;
-      }
+.player a {
+  display: inline-block;
+  color: #35dc91;
+  font-size: 11px;
+  margin-top: 7px;
+  text-decoration: none;
+}
 
-      .features {
-        grid-template-columns: 1fr;
-      }
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px;
+  margin-top: 25px;
+}
 
-      header {
-        padding: 20px;
-      }
-    }
-  </style>
+.feature {
+  background: #111827;
+  border: 1px solid #202b40;
+  border-radius: 13px;
+  padding: 20px 10px;
+  text-align: center;
+}
+
+.feature div {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+.feature h3 {
+  font-size: 12px;
+  margin-bottom: 7px;
+}
+
+.feature p {
+  font-size: 11px;
+  color: #8290a5;
+  line-height: 1.5;
+}
+
+footer {
+  border-top: 1px solid #20283a;
+  text-align: center;
+  padding: 30px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+@media(max-width: 550px) {
+  main {
+    margin-top: 35px;
+  }
+
+  .teams,
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  header {
+    padding: 18px;
+  }
+
+  .status {
+    font-size: 9px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="logo">CLUB<span>MATCH</span></div>
-    <div class="tag">FOOTBALL CAREER FINDER</div>
-  </header>
+<header>
+  <div class="logo">CLUB<span>MATCH</span></div>
+  <div class="status">⚽ FOOTBALL CAREER FINDER</div>
+</header>
 
-  <main>
+<main>
 
-    <section class="hero">
-      <div style="font-size:38px;">⚽</div>
-      <h1>Ortak futbolcuları <span>keşfet.</span></h1>
-      <p>
-        İki futbol kulübü seç. Tarih boyunca her iki takımda da
-        forma giymiş futbolcuları keşfet.
-      </p>
-    </section>
+  <section class="hero">
+    <div class="ball">⚽</div>
+    <h1>Ortak futbolcuları <span>keşfet.</span></h1>
+    <p>
+      İki kulüp seç ve kariyerinde her iki takımda da
+      forma giymiş futbolcuları bul.
+    </p>
+  </section>
 
-    <section class="search-box">
+  <section class="search-box">
 
-      <div class="teams">
-
-        <div class="team">
-          <label>1. FUTBOL KULÜBÜ</label>
-          <input
-            id="team1"
-            type="text"
-            placeholder="Örn. Tottenham"
-            autocomplete="off"
-          >
-        </div>
-
-        <div class="team">
-          <label>2. FUTBOL KULÜBÜ</label>
-          <input
-            id="team2"
-            type="text"
-            placeholder="Örn. Borussia Dortmund"
-            autocomplete="off"
-          >
-        </div>
-
+    <div class="teams">
+      <div>
+        <label>1. FUTBOL KULÜBÜ</label>
+        <input id="team1" placeholder="Örn. Tottenham">
       </div>
 
-      <div class="versus">VS</div>
-
-      <button onclick="searchPlayers()">
-        ⚡ ORTAK FUTBOLCULARI BUL
-      </button>
-
-      <div class="result-area" id="result"></div>
-
-    </section>
-
-    <section class="features">
-
-      <div class="feature">
-        <div class="icon">👤</div>
-        <h3>Oyuncu Bilgileri</h3>
-        <p>Futbolcuların kariyer geçmişleri</p>
+      <div>
+        <label>2. FUTBOL KULÜBÜ</label>
+        <input id="team2" placeholder="Örn. Borussia Dortmund">
       </div>
+    </div>
 
-      <div class="feature">
-        <div class="icon">🏆</div>
-        <h3>Kulüp Geçmişi</h3>
-        <p>Geçmiş ve güncel takımlar</p>
-      </div>
+    <div class="versus">VS</div>
 
-      <div class="feature">
-        <div class="icon">🔎</div>
-        <h3>Akıllı Arama</h3>
-        <p>İki takım arasında ortak oyuncular</p>
-      </div>
+    <button id="searchButton">
+      ⚡ ORTAK FUTBOLCULARI BUL
+    </button>
 
-    </section>
+    <div class="result" id="result">
+      <div id="resultContent"></div>
+    </div>
 
-  </main>
+  </section>
 
-  <footer>
-    CLUBMATCH © 2026 · FOOTBALL CONNECTS US
-  </footer>
+  <section class="features">
+    <div class="feature">
+      <div>👤</div>
+      <h3>Oyuncu Bilgileri</h3>
+      <p>Futbolcuların isimleri ve fotoğrafları</p>
+    </div>
 
-  
-const WIKIDATA_API = "https://www.wikidata.org/w/api.php";
-const SPARQL_API = "https://query.wikidata.org/sparql";
+    <div class="feature">
+      <div>🏆</div>
+      <h3>Kulüp Geçmişi</h3>
+      <p>İki kulüpte de oynayan futbolcular</p>
+    </div>
 
+    <div class="feature">
+      <div>🔎</div>
+      <h3>Akıllı Arama</h3>
+      <p>Ortak oyuncu araştırması</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  CLUBMATCH © 2026 · FOOTBALL CONNECTS US
+</footer>
+
+<script>
+
+const API = "https://www.wikidata.org/w/api.php";
+const SPARQL = "https://query.wikidata.org/sparql";
+
+const button = document.getElementById("searchButton");
+const result = document.getElementById("result");
+const content = document.getElementById("resultContent");
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[c]);
+}
+
+// Takım arama
 async function findTeam(name) {
-  const url = new URL(WIKIDATA_API);
-  url.search = new URLSearchParams({
+
+  const params = new URLSearchParams({
     action: "wbsearchentities",
     search: name,
     language: "en",
     format: "json",
     origin: "*",
-    limit: "5"
+    limit: "15"
   });
 
-  const response = await fetch(url);
-  if (!response.ok) throw new Error("Takım araması başarısız.");
+  const response = await fetch(API + "?" + params);
+
+  if (!response.ok) {
+    throw new Error("Takım arama servisine bağlanılamadı.");
+  }
 
   const data = await response.json();
 
-  if (!data.search || data.search.length === 0) {
-    throw new Error(name + " adlı takım bulunamadı.");
+  if (!data.search || !data.search.length) {
+    throw new Error(name + " bulunamadı.");
   }
 
-  return data.search[0];
+  const clubs = data.search.filter(item => {
+    const description = (item.description || "").toLowerCase();
+
+    return (
+      description.includes("football club") ||
+      description.includes("soccer club") ||
+      description.includes("association football")
+    );
+  });
+
+  if (!clubs.length) {
+    throw new Error(
+      name + " için doğrulanabilir futbol kulübü kaydı bulunamadı."
+    );
+  }
+
+  const normalized = name.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+  clubs.sort((a, b) => {
+    const aLabel = a.label.toLowerCase().replace(/[^a-z0-9]/g, "");
+    const bLabel = b.label.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+    const aScore = aLabel === normalized ? 2 :
+      aLabel.includes(normalized) || normalized.includes(aLabel) ? 1 : 0;
+
+    const bScore = bLabel === normalized ? 2 :
+      bLabel.includes(normalized) || normalized.includes(bLabel) ? 1 : 0;
+
+    return bScore - aScore;
+  });
+
+  return clubs[0];
 }
 
+// İki takımın ortak futbolcularını bul
 async function findPlayers(teamA, teamB) {
+
   const query = `
-    SELECT DISTINCT
-      ?player
-      ?playerLabel
-      ?playerDescription
-      ?image
+    SELECT DISTINCT ?player ?playerLabel ?playerDescription ?image
     WHERE {
       ?player wdt:P54 wd:${teamA};
               wdt:P54 wd:${teamB}.
@@ -339,149 +425,194 @@ async function findPlayers(teamA, teamB) {
       }
 
       SERVICE wikibase:label {
-        bd:serviceParam wikibase:language "en".
+        bd:serviceParam wikibase:language "tr,en".
       }
     }
     LIMIT 100
   `;
 
-  const url = SPARQL_API + "?" + new URLSearchParams({
+  const params = new URLSearchParams({
     query: query,
     format: "json"
   });
 
-  const response = await fetch(url, {
+  const response = await fetch(SPARQL + "?" + params, {
     headers: {
       "Accept": "application/sparql-results+json"
     }
   });
 
   if (!response.ok) {
-    throw new Error("Futbolcu verileri alınamadı.");
+    throw new Error("Futbolcu veri tabanına ulaşılamadı.");
   }
 
   const data = await response.json();
+
   return data.results.bindings;
 }
 
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
+// Oyuncuları ekrana getir
+function showPlayers(players, club1, club2) {
+
+  let html = `
+    <h2 style="color:#35dc91;margin-bottom:12px;">
+      Ortak futbolcular
+    </h2>
+
+    <p class="message">
+      ${escapeHTML(club1.label)} × ${escapeHTML(club2.label)}
+    </p>
+
+    <p style="margin:18px 0;color:#35dc91;">
+      Bulunan kayıt: <strong>${players.length}</strong>
+    </p>
+  `;
+
+  if (!players.length) {
+    html += `
+      <p class="message">
+        Bu iki takım için ortak futbolcu kaydı bulunamadı.
+        Bu, gerçekte ortak futbolcu olmadığı anlamına gelmez;
+        veri tabanındaki kayıtlar eksik olabilir.
+      </p>
+    `;
+  }
+
+  players.forEach(player => {
+
+    const name = player.playerLabel?.value || "Bilinmeyen oyuncu";
+    const description = player.playerDescription?.value || "Futbolcu";
+    const image = player.image?.value || "";
+    const playerUrl = player.player?.value || "";
+
+    const safeImage = image.startsWith("https://") ? image : "";
+
+    const safePlayerUrl =
+      playerUrl.startsWith("https://www.wikidata.org/")
+        ? playerUrl
+        : "";
+
+    html += `
+      <div class="player">
+
+        ${
+          safeImage
+          ? `<img src="${escapeHTML(safeImage)}"
+                  alt="${escapeHTML(name)}"
+                  loading="lazy">`
+          : `<div class="no-image">⚽</div>`
+        }
+
+        <div>
+          <div class="player-name">
+            ${escapeHTML(name)}
+          </div>
+
+          <div class="player-info">
+            ${escapeHTML(description)}
+          </div>
+
+          ${
+            safePlayerUrl
+            ? `<a href="${escapeHTML(safePlayerUrl)}"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  Oyuncu bilgilerini gör ↗
+                </a>`
+            : ""
+          }
+        </div>
+
+      </div>
+    `;
+  });
+
+  html += `
+    <p class="message" style="margin-top:20px;font-size:11px;">
+      Kaynak: Wikidata. Sonuçlar yalnızca kayıtlı kulüp
+      geçmişlerine dayanır. Eksik kayıtlar nedeniyle bütün
+      ortak futbolcular listelenmeyebilir.
+    </p>
+  `;
+
+  content.innerHTML = html;
 }
 
+// Ana arama fonksiyonu
 async function searchPlayers() {
+
   const team1 = document.getElementById("team1").value.trim();
   const team2 = document.getElementById("team2").value.trim();
-  const result = document.getElementById("result");
 
   result.style.display = "block";
 
   if (!team1 || !team2) {
-    result.innerHTML = "⚠️ Lütfen iki takımın adını da gir.";
+    content.innerHTML =
+      '<p class="message">⚠️ İki takımın adını da gir.</p>';
     return;
   }
 
   if (team1.toLowerCase() === team2.toLowerCase()) {
-    result.innerHTML = "⚠️ İki farklı takım seçmelisin.";
+    content.innerHTML =
+      '<p class="message">⚠️ İki farklı takım seçmelisin.</p>';
     return;
   }
 
-  result.innerHTML = "⏳ Takımlar aranıyor...";
+  button.disabled = true;
+  button.textContent = "⏳ ARANIYOR...";
+
+  content.innerHTML =
+    '<p class="message">Takımlar aranıyor...</p>';
 
   try {
+
     const [club1, club2] = await Promise.all([
       findTeam(team1),
       findTeam(team2)
     ]);
 
-    result.innerHTML = "🔎 Ortak futbolcular araştırılıyor...";
+    if (club1.id === club2.id) {
+      throw new Error("İki giriş de aynı kulübe karşılık geliyor.");
+    }
+
+    content.innerHTML =
+      '<p class="message">⚽ Ortak futbolcular araştırılıyor...</p>';
 
     const players = await findPlayers(club1.id, club2.id);
 
-    let html = `
-      <h2 style="color:#35dc91;margin-bottom:10px;">
-        Ortak futbolcular
-      </h2>
-      <p style="margin-bottom:15px;">
-        ${escapeHTML(club1.label)} ×
-        ${escapeHTML(club2.label)}
-      </p>
-      <p style="margin-bottom:20px;">
-        Bulunan oyuncu sayısı: <strong>${players.length}</strong>
-      </p>
-    `;
-
-    if (players.length === 0) {
-      html += `
-        <p>Bu iki takım için Wikidata'da kayıtlı ortak futbolcu bulunamadı.</p>
-      `;
-    }
-
-    players.forEach(player => {
-      const name = player.playerLabel?.value || "İsimsiz oyuncu";
-      const description =
-        player.playerDescription?.value || "Futbolcu";
-      const image = player.image?.value || "";
-      const playerUrl = player.player?.value || "";
-
-      html += `
-        <div style="
-          display:flex;
-          gap:15px;
-          align-items:center;
-          background:#111827;
-          border:1px solid #263249;
-          padding:12px;
-          border-radius:12px;
-          margin-bottom:12px;
-        ">
-          ${
-            image.startsWith("https://")
-            ? `<img src="${escapeHTML(image)}"
-                alt="${escapeHTML(name)}"
-                style="width:65px;height:65px;object-fit:cover;border-radius:10px;">`
-            : `<div style="width:65px;height:65px;background:#263249;border-radius:10px;display:grid;place-items:center;">⚽</div>`
-          }
-
-          <div>
-            <strong style="color:#35dc91;">
-              ${escapeHTML(name)}
-            </strong>
-            <p style="font-size:12px;color:#9aa8bc;margin-top:5px;">
-              ${escapeHTML(description)}
-            </p>
-            ${
-              playerUrl.startsWith("https://www.wikidata.org/")
-              ? `<a href="${escapeHTML(playerUrl)}" target="_blank" rel="noopener noreferrer" style="color:#35dc91;font-size:12px;">Oyuncu bilgileri ↗</a>`
-              : ""
-            }
-          </div>
-        </div>
-      `;
-    });
-
-    html += `
-      <p style="font-size:11px;color:#8290a5;margin-top:15px;">
-        Kaynak: Wikidata. Sonuçlar veri tabanındaki kayıtlarla sınırlıdır.
-      </p>
-    `;
-
-    result.innerHTML = html;
+    showPlayers(players, club1, club2);
 
   } catch (error) {
-    result.innerHTML = `
-      <strong style="color:#ff7777;">Bir hata oluştu!</strong>
-      <p>${escapeHTML(error.message)}</p>
-      <p style="margin-top:8px;">İnternet bağlantını kontrol edip tekrar dene.</p>
+
+    content.innerHTML = `
+      <p style="color:#ff7777;font-weight:bold;">
+        Arama başarısız!
+      </p>
+      <p class="message" style="margin-top:10px;">
+        ${escapeHTML(error.message)}
+      </p>
+      <p class="message" style="margin-top:8px;">
+        Biraz sonra tekrar deneyebilirsin.
+      </p>
     `;
+
+  } finally {
+
+    button.disabled = false;
+    button.textContent = "⚡ ORTAK FUTBOLCULARI BUL";
+
   }
 }
 
+button.addEventListener("click", searchPlayers);
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Enter") {
+    searchPlayers();
+  }
+});
+
+</script>
 
 </body>
 </html>
